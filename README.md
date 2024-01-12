@@ -1,13 +1,27 @@
 # rviz_lighting
+
 This is an RViz plugin that provides ambient, directional, point, and spot lights. These lights can be used to give an RViz scene a more interesting lighting environment. They can be attached to tf frames, mimicing lights attached to moving robot components.
 
+Clone from https://github.com/mogumbo/rviz_lighting
+
+## Init
+
+```
+catkin_make
+
+roslaunch rviz_lighting rviz_lighting.launch 
+```
+
 ### Making it work better with RViz
+
 RViz is not compatible with extra lights for a few reasons. I use a custom RViz with the following changes to get the full effect of rviz_lighting:
+
 * RViz has a default light attached to the camera which I have disabled.
 * Made ambient component of material the same as diffuse instead of cutting it in half. This makes it so the full range of ambient light can be used and the developer will get the amount of ambient light they expect from their light settings.
 * Added a specular component to materials, so specular light will have an effect.
 
 Following are the exact changes I made to RViz. If anything like rviz_lighting were to be added to RViz's default plugins, changes like these should be made (or they should at least be made optional).
+
 ```sh
 diff --git a/src/rviz/default_plugin/markers/mesh_resource_marker.cpp b/src/rviz/default_plugin/markers/mesh_resource_marker.cpp
 index 9ea7470..7b5386b 100644
@@ -111,6 +125,7 @@ index 9367b08..53d870f 100644
 ```
 
 ### To-do
+
 * There are other Ogre::Light features that could be exposed.
 * Shadows.
 * Per-pixel lighting. This would require some fancy shader work and probably would not be part of this plugin.
